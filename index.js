@@ -15,22 +15,22 @@ companies.forEach(company => {
     .then(response => {
         const html = response.data
         const $ = cheerio.load(html)
-        const tableContents = $('tbody')
+        const tableContent = $('tbody')
         let count = 0
         const lineLimit = 10
 
-        tableContents.find('tr').each((i, elem) => {
+        tableContent.find('tr').each((i, elem) => {
             if (count >= lineLimit) {
                 return false;
             }
             const cell = $(elem).find('td')
 
             const obj = {
-                "Company name": $(cell[2]).text().trim(),
-                "Company code": $(cell[2]).text().trim(),
+                "Company name": $(cell[2]).find('div.company-name').text().trim(),
+                "Company code": $(cell[2]).find('div.company-code').text().trim(),
                 "Company Revenue": $(cell[3]).text().trim(),
                 "Stock Value": $(cell[4]).text().trim(),
-                "Company Country": $(cell[7]).text().trim(),
+                "Company Country": $(cell[7]).find('span.responsive-hidden').text().trim(),
             }
             
             data.push(obj)
